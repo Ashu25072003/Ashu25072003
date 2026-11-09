@@ -1,44 +1,181 @@
-# Hi there, I'm Ashutosh Kumar Singh 👋
+name: Generate Neon Profile Graphics
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/<your-linkedin-id>)
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=flat&logo=About.me&logoColor=white)](https://<your-portfolio-link>)
-[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:<your-email>@gmail.com)
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
-**Autonomous Systems & Robotics Software Engineer** specializing in UAV navigation, visual-inertial SLAM, multi-agent coordination, and embedded robotics systems. Experienced in architecting robust perception-to-control pipelines on ROS 2 and Gazebo.
+permissions:
+  contents: write
 
----
+jobs:
+  build-neon-svg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-### 🛠️ Core Technical Stack
+      - name: Generate Neon Bento SVG Assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: ${{ github.repository_owner }}
+        run: |
+          python3 - << 'EOF'
+          import os, json, urllib.request
 
-- **Robotics & Simulation:** ROS 2 (Humble/Iron), Gazebo, RViz, Navigation2 (Nav2), PX4, MAVLink, Micro-XRCE-DDS
-- **Perception & State Estimation:** ORB-SLAM3, OpenCV, Sensor Fusion (EKF/UKF), Point Cloud Processing (PCL)
-- **Languages:** C++ (17/20), Python 3, SQL, Bash
-- **Math & Control:** MATLAB & Simulink, State-Space Control, Trajectory Generation, PID
-- **DevOps & Tooling:** Docker, Git/GitHub Actions, CMake, Linux (Ubuntu), GDB
+          user = os.environ.get("GH_USER", "Ashu25072003")
+          token = os.environ.get("GH_TOKEN", "")
+          os.makedirs("assets", exist_ok=True)
 
----
+          headers = {"Accept": "application/vnd.github+json", "User-Agent": "Neon-Dashboard"}
+          if token:
+              headers["Authorization"] = f"Bearer {token}"
 
-### 🚀 Highlighted Engineering Projects
+          def fetch_json(url):
+              try:
+                  req = urllib.request.Request(url, headers=headers)
+                  with urllib.request.urlopen(req, timeout=10) as r:
+                      return json.loads(r.read().decode())
+              except Exception:
+                  return {}
 
-| Project | Tech Stack | Highlights |
-| :--- | :--- | :--- |
-| **[RUDRA ANAV](https://github.com/<username>/rudra-anav)** | ROS 2, ORB-SLAM, C++, RViz | Real-time visual odometry and point-cloud 3D mapping for GPS-denied UAV navigation. |
-| **[Swarm-Coordination](https://github.com/<username>/drone-swarm)** | Python, ROS 2, Lighthouse Positioning | Multi-agent master-slave formation control and gesture command interface. |
-| **[Sensor-Fusion Pothole Detector](https://github.com/<username>/pothole-detection)** | OpenCV, IMU Fusion, C++ | Automated hazard identification system combining optical edge analysis with accelerometer/gyroscope signals. |
-| **[Martian Drone Simulation](https://github.com/<username>/martian-uav-sim)** | ROS 2, Gazebo, Python | Flight dynamics validation under low-density atmospheric conditions (IRoC-U Finalist). |
+          u_data = fetch_json(f"https://api.github.com/users/{user}")
+          repos = fetch_json(f"https://api.github.com/users/{user}/repos?per_page=100")
+          pub_repos = u_data.get("public_repos", 1) if isinstance(u_data, dict) else 1
 
----
+          # 1. NEON HEADER BANNER (assets/header.svg)
+          header_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 180" width="100%">
+            <defs>
+              <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0d1117"/>
+                <stop offset="50%" stop-color="#151029"/>
+                <stop offset="100%" stop-color="#0d1b2a"/>
+              </linearGradient>
+              <linearGradient id="neonText" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#BC13FE"/>
+                <stop offset="50%" stop-color="#7F00FF"/>
+                <stop offset="100%" stop-color="#00F0FF"/>
+              </linearGradient>
+              <linearGradient id="trail" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00F0FF" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#BC13FE" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#00F0FF" stop-opacity="1"/>
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="896" height="176" rx="16" fill="url(#bg)" stroke="url(#neonText)" stroke-width="2.5"/>
+            <text x="40" y="88" font-family="'Segoe UI', Orbitron, sans-serif" font-size="40" font-weight="900" fill="url(#neonText)" letter-spacing="2">ASHUTOSH KUMAR SINGH</text>
+            <text x="42" y="128" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="500" fill="#E6EDF3" letter-spacing="0.5">Autonomous Systems &amp; Robotics Engineer</text>
+            <!-- Neon Trails & Quadcopter Silhouette -->
+            <path d="M 550 140 Q 670 135 790 85" fill="none" stroke="url(#trail)" stroke-width="4"/>
+            <path d="M 580 152 Q 690 145 810 95" fill="none" stroke="url(#trail)" stroke-width="2.5"/>
+            <g transform="translate(720, 35)">
+              <line x1="20" y1="35" x2="110" y2="20" stroke="#00F0FF" stroke-width="5" stroke-linecap="round"/>
+              <line x1="35" y1="55" x2="95" y2="10" stroke="#BC13FE" stroke-width="4" stroke-linecap="round"/>
+              <ellipse cx="65" cy="35" rx="22" ry="10" fill="#161B22" stroke="#00F0FF" stroke-width="2.5"/>
+              <ellipse cx="20" cy="30" rx="22" ry="4" fill="#00F0FF" opacity="0.85"/>
+              <ellipse cx="110" cy="15" rx="22" ry="4" fill="#00F0FF" opacity="0.85"/>
+              <ellipse cx="35" cy="50" rx="18" ry="3.5" fill="#BC13FE" opacity="0.85"/>
+              <ellipse cx="95" cy="6" rx="18" ry="3.5" fill="#BC13FE" opacity="0.85"/>
+              <circle cx="65" cy="48" r="6" fill="#FF007F"/>
+            </g>
+          </svg>'''
+          with open("assets/header.svg", "w") as f:
+              f.write(header_svg)
 
-### 📈 GitHub Metrics & Activity
+          # 2. NEON GITHUB STATS CARD (assets/stats.svg)
+          stats_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 310" width="100%">
+            <defs>
+              <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1a0b2e"/>
+                <stop offset="60%" stop-color="#12072b"/>
+                <stop offset="100%" stop-color="#2b0938"/>
+              </linearGradient>
+              <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#FF007F"/>
+                <stop offset="50%" stop-color="#BC13FE"/>
+                <stop offset="100%" stop-color="#00F0FF"/>
+              </linearGradient>
+              <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#BC13FE" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#1a0b2e" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="376" height="306" rx="16" fill="url(#cardBg)" stroke="#BC13FE" stroke-width="2"/>
+            <text x="190" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="800" fill="#FF79C6" letter-spacing="1.5">GITHUB STATS</text>
 
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=<username>&show_icons=true&theme=tokyonight&hide_border=true&count_private=true" alt="Ashutosh's GitHub Stats" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=<username>&layout=compact&theme=tokyonight&hide_border=true" alt="Top Languages" width="48%" />
-</div>
+            <!-- Icons & Metrics -->
+            <circle cx="75" cy="85" r="9" fill="none" stroke="#FF8C00" stroke-width="3"/>
+            <line x1="55" y1="85" x2="66" y2="85" stroke="#FF8C00" stroke-width="3"/>
+            <line x1="84" y1="85" x2="95" y2="85" stroke="#FF8C00" stroke-width="3"/>
+            <text x="75" y="130" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">15+</text>
+            <text x="75" y="150" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">Commits</text>
 
----
+            <rect x="178" y="72" width="24" height="26" rx="4" fill="none" stroke="#FFD700" stroke-width="3"/>
+            <text x="190" y="130" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">{pub_repos}+</text>
+            <text x="190" y="150" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">Repositories</text>
 
-### 📌 Current Focus & Engineering Standards
-- Developing robust edge-compute perception stacks for autonomous navigation.
-- Strict adherence to modern C++ conventions (RAII, memory safety) and ROS 2 lifecycle management.
-- Preparing for GATE CS & PSU technical assessments.
+            <circle cx="298" cy="76" r="5" fill="none" stroke="#FF007F" stroke-width="3"/>
+            <circle cx="312" cy="94" r="5" fill="none" stroke="#FF007F" stroke-width="3"/>
+            <path d="M 298 81 L 298 95 M 312 75 L 312 89" stroke="#FF007F" stroke-width="3"/>
+            <text x="305" y="130" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">Active</text>
+            <text x="305" y="150" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">CI / Pipelines</text>
+
+            <text x="190" y="198" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">Grade: <tspan fill="#39FF14">A++</tspan></text>
+
+            <!-- Glowing Spline Wave -->
+            <path d="M 4 285 Q 50 245, 95 268 T 185 235 T 275 240 T 376 190 L 376 306 L 4 306 Z" fill="url(#areaGrad)"/>
+            <path d="M 4 285 Q 50 245, 95 268 T 185 235 T 275 240 T 376 190" fill="none" stroke="url(#waveGrad)" stroke-width="4" stroke-linecap="round"/>
+          </svg>'''
+          with open("assets/stats.svg", "w") as f:
+              f.write(stats_svg)
+
+          # 3. NEON DONUT TOP LANGUAGES CARD (assets/langs.svg)
+          langs_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 310" width="100%">
+            <rect x="2" y="2" width="376" height="306" rx="16" fill="#0d1117" stroke="#00F0FF" stroke-width="2"/>
+            <text x="190" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="800" fill="#00F0FF" letter-spacing="1.5">TOP LANGUAGES</text>
+
+            <!-- C++ Donut (48.5%) -->
+            <g transform="translate(110, 118)">
+              <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+              <circle r="44" fill="none" stroke="#00F0FF" stroke-width="9" stroke-dasharray="135 276" stroke-linecap="round" transform="rotate(-90)"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">C++</text>
+              <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#00F0FF">48.5%</text>
+            </g>
+
+            <!-- Python Donut (35.2%) -->
+            <g transform="translate(270, 118)">
+              <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+              <circle r="44" fill="none" stroke="#BC13FE" stroke-width="9" stroke-dasharray="98 276" stroke-linecap="round" transform="rotate(-90)"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">Python</text>
+              <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#FF79C6">35.2%</text>
+            </g>
+
+            <!-- CMake Donut (10.1%) -->
+            <g transform="translate(110, 235)">
+              <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+              <circle r="44" fill="none" stroke="#9D00FF" stroke-width="9" stroke-dasharray="45 276" stroke-linecap="round" transform="rotate(-90)"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">CMake</text>
+              <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#BC13FE">10.1%</text>
+            </g>
+
+            <!-- Shell Donut (6.2%) -->
+            <g transform="translate(270, 235)">
+              <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+              <circle r="44" fill="none" stroke="#00FFCC" stroke-width="9" stroke-dasharray="30 276" stroke-linecap="round" transform="rotate(-90)"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">Shell</text>
+              <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#00FFCC">6.2%</text>
+            </g>
+          </svg>'''
+          with open("assets/langs.svg", "w") as f:
+              f.write(langs_svg)
+          EOF
+
+      - name: Commit & Push Generated SVG Assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/*.svg
+          git diff --staged --quiet || git commit -m "chore: update neon dashboard SVGs"
+          git push
