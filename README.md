@@ -42,3 +42,4 @@
 - Developing robust edge-compute perception stacks for autonomous navigation.
 - Strict adherence to modern C++ conventions (RAII, memory safety) and ROS 2 lifecycle management.
 - Preparing for GATE CS & PSU technical assessments.
+
