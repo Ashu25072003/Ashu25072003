@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 310" width="100%">
+  <rect x="2" y="2" width="376" height="306" rx="16" fill="#0d1117" stroke="#00F0FF" stroke-width="2"/>
+  <text x="190" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="800" fill="#00F0FF" letter-spacing="1.5">TOP LANGUAGES</text>
+
+  <!-- C++ Donut (48.5%) -->
+  <g transform="translate(110, 118)">
+    <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+    <circle r="44" fill="none" stroke="#00F0FF" stroke-width="9" stroke-dasharray="135 276" stroke-linecap="round" transform="rotate(-90)"/>
+    <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">C++</text>
+    <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#00F0FF">48.5%</text>
+  </g>
+
+  <!-- Python Donut (35.2%) -->
+  <g transform="translate(270, 118)">
+    <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+    <circle r="44" fill="none" stroke="#BC13FE" stroke-width="9" stroke-dasharray="98 276" stroke-linecap="round" transform="rotate(-90)"/>
+    <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">Python</text>
+    <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#FF79C6">35.2%</text>
+  </g>
+
+  <!-- CMake Donut (10.1%) -->
+  <g transform="translate(110, 235)">
+    <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+    <circle r="44" fill="none" stroke="#9D00FF" stroke-width="9" stroke-dasharray="45 276" stroke-linecap="round" transform="rotate(-90)"/>
+    <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">CMake</text>
+    <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#BC13FE">10.1%</text>
+  </g>
+
+  <!-- Shell Donut (6.2%) -->
+  <g transform="translate(270, 235)">
+    <circle r="44" fill="none" stroke="#1F2937" stroke-width="9"/>
+    <circle r="44" fill="none" stroke="#00FFCC" stroke-width="9" stroke-dasharray="30 276" stroke-linecap="round" transform="rotate(-90)"/>
+    <text x="0" y="-4" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">Shell</text>
+    <text x="0" y="16" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#00FFCC">6.2%</text>
+  </g>
+</svg>

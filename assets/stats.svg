@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 310" width="100%">
+  <defs>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a0b2e"/>
+      <stop offset="60%" stop-color="#12072b"/>
+      <stop offset="100%" stop-color="#2b0938"/>
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF007F"/>
+      <stop offset="50%" stop-color="#BC13FE"/>
+      <stop offset="100%" stop-color="#00F0FF"/>
+    </linearGradient>
+    <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#BC13FE" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1a0b2e" stop-opacity="0.0"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="376" height="306" rx="16" fill="url(#cardBg)" stroke="#BC13FE" stroke-width="2"/>
+  <text x="190" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="20" font-weight="800" fill="#FF79C6" letter-spacing="1.5">GITHUB STATS</text>
+
+  <!-- Icons & Metrics -->
+  <circle cx="75" cy="85" r="9" fill="none" stroke="#FF8C00" stroke-width="3"/>
+  <line x1="55" y1="85" x2="66" y2="85" stroke="#FF8C00" stroke-width="3"/>
+  <line x1="84" y1="85" x2="95" y2="85" stroke="#FF8C00" stroke-width="3"/>
+  <text x="75" y="130" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">15+</text>
+  <text x="75" y="150" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">Commits</text>
+
+  <rect x="178" y="72" width="24" height="26" rx="4" fill="none" stroke="#FFD700" stroke-width="3"/>
+  <text x="190" y="130" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">1+</text>
+  <text x="190" y="150" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">Repositories</text>
+
+  <circle cx="298" cy="76" r="5" fill="none" stroke="#FF007F" stroke-width="3"/>
+  <circle cx="312" cy="94" r="5" fill="none" stroke="#FF007F" stroke-width="3"/>
+  <path d="M 298 81 L 298 95 M 312 75 L 312 89" stroke="#FF007F" stroke-width="3"/>
+  <text x="305" y="130" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" font-weight="800" fill="#FFFFFF">Active</text>
+  <text x="305" y="150" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#C9D1D9">CI / Pipelines</text>
+
+  <text x="190" y="198" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">Grade: <tspan fill="#39FF14">A++</tspan></text>
+
+  <!-- Glowing Spline Wave -->
+  <path d="M 4 285 Q 50 245, 95 268 T 185 235 T 275 240 T 376 190 L 376 306 L 4 306 Z" fill="url(#areaGrad)"/>
+  <path d="M 4 285 Q 50 245, 95 268 T 185 235 T 275 240 T 376 190" fill="none" stroke="url(#waveGrad)" stroke-width="4" stroke-linecap="round"/>
+</svg>
